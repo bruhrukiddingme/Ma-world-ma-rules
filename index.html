@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keil's Corner</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fdf6f0;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+    }
+    .profile-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 30px;
+    }
+    .link-btn {
+      background-color: #ffcdd2;
+      border: none;
+      padding: 15px 25px;
+      margin: 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: background 0.3s;
+    }
+    .link-btn:hover {
+      background-color: #f8bbd0;
+    }
+    .log {
+      font-size: 0.9rem;
+      margin-top: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Keil's Corner</h1>
+  <p style="text-align:center">Random thoughts, links, and a touch of life</p>
+  <div class="profile-links">
+    <button class="link-btn" onclick="trackClick('Instagram', 'https://instagram.com/your_profile')">Instagram</button>
+    <button class="link-btn" onclick="trackClick('YouTube', 'https://youtube.com/your_channel')">YouTube</button>
+    <button class="link-btn" onclick="trackClick('Spotify', 'https://spotify.com/your_playlist')">Spotify</button>
+  </div>
+  <div class="log" id="log"></div>
+
+  <script>
+    async function trackClick(name, url) {
+      const res = await fetch("https://api.ipify.org?format=json");
+      const data = await res.json();
+      const ip = data.ip;
+      const ua = navigator.userAgent;
+
+      const record = {
+        link: name,
+        ip: ip,
+        device: ua,
+        time: new Date().toISOString()
+      };
+
+      // Simulate saving to Firebase or backend here
+      console.log("Click tracked:", record);
+      document.getElementById("log").innerText = `Đã ghi nhận click vào ${name}`;
+
+      // Redirect to actual URL
+      window.open(url, "_blank");
+    }
+  </script>
+</body>
+</html>
